@@ -12,7 +12,7 @@ class UsersController < ApplicationController
   end
 
 
-def create
+  def create
     @user = User.new(params[:user])
     if @user.save
       sign_in @user
@@ -21,7 +21,7 @@ def create
     else
       render 'new'
     end
-  end
+end
 
 
   def index
@@ -66,6 +66,11 @@ private
     def admin_user
       redirect_to(root_path) unless current_user.admin?
     end
+
+    def show
+    @user = User.find(params[:id])
+    @microposts = @user.microposts.paginate(page: params[:page])
+  end
 end
 
  
